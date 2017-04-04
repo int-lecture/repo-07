@@ -1,0 +1,73 @@
+#personalDetails{
+	color: blue;
+}
+
+
+th{
+	background: #4169e1;
+	color: white;
+}
+
+tr {
+	color: white;
+	background: #4169e1;
+
+}
+
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: #4169e1;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+   
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+a:link {
+  color: black;
+  text-decoration: none;
+  font-weight: bold:
+}
+
+a:visited {
+  color: black;
+  text-decoration: none;
+  font-weight: bold:
+}
+a:hover{
+  color: grey;
+  text-decoration: none;
+  font-weight: bold:
+}
+a:active {
+  text-decoration: underline;
+}
+
+
