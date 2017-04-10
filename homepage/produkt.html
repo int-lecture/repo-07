@@ -13,7 +13,7 @@
 		<div class="container">
 
 			<header>
-			   <h1>Produkt :D</h1>
+			   <h1>Produkt</h1>
 			</header>
   
 		<nav>
@@ -30,7 +30,49 @@
 				<br/>
 				<p>Ist ein verschlüüseltes Messengersystem für die Kommuniktion mit verschiedenen Clients. <br/>
 				Die Realisierung wird mit Hilfe des JMS Systems bewerkstelligt.</p>
+				<?php
+				if(!empty($_GET['name']) && !empty($_GET['text'])):
+	
+					// und nun die Daten in eine Datei schreiben
+					// Datei wird zum Schreiben geoeffnet a für append hinzufügen
+					$handle = fopen ( "messages.txt", "a" );
+					
+					$nameDesKunden =  $_GET['name'];
+					 $text = $_GET['text'];
+					// schreiben des Inhaltes von email
+					fwrite ( $handle, $text );
+					 
+					// Trennzeichen einfügen, damit Auswertung möglich wird
+					fwrite ( $handle, "|" );
+					 
+					// schreiben des Inhalts von name
+					fwrite ( $handle, $nameDesKunden );
+					// schreiben eines Leerzeichens
+					fwrite ( $handle, " " );
+					 
+					// Datei schließen
+					fclose ( $handle );
+					
+					echo "Danke - Ihre Daten wurden gespeichert";
+					exit;
+				else:
+			?>
+				
+			<h3><u>Messenger</u></h3>
 
+			<form action="produkt.html" method="get">
+
+				<p>Name<br>
+				<input type="Text" name="name"></p>
+
+				<p>Text<br>
+				<input type="Text" name="text"></p>
+
+				<input type="Submit" name="" value="speichern">
+
+			</form>
+	
+			<?php endif; ?>		
 
 			<br/>
 	</article>
