@@ -18,8 +18,9 @@
   
 		<nav>
 		  <ul>
+		    <li><a href="index.php">Startseite</a></li> 
+			<li><a href="produkt.html">Produkt</a></li>
 		    <li><a href="persoenlicheDaten.html">Persönliche Daten</a></li>
-		    <li><a href="produkt.html">Produkt</a></li>
 		    <li><a href="impressum.html">Impressum</a></li>
 		  </ul>
 		</nav>
@@ -34,50 +35,13 @@
 		 <img src="mini2.gif" alt="HTML5 Icon" style="float:right;width:300px;height:250px;" >
 
 			<br/>
-			
-			<?php
-				if(!empty($_GET['email']) && !empty($_GET['name'])):
-	
-					// und nun die Daten in eine Datei schreiben
-					// Datei wird zum Schreiben geoeffnet a für append hinzufügen
-					$handle = fopen ( "anfragen.txt", "a" );
-					$emailadress = $_GET['email'];
-					$nameDesKunden =  $_GET['name'];
-					 
-					// schreiben des Inhaltes von email
-					fwrite ( $handle, $emailadress );
-					 
-					// Trennzeichen einfügen, damit Auswertung möglich wird
-					fwrite ( $handle, "|" );
-					 
-					// schreiben des Inhalts von name
-					fwrite ( $handle, $nameDesKunden );
-					// schreiben eines Leerzeichens
-					fwrite ( $handle, " " );
-					 
-					// Datei schließen
-					fclose ( $handle );
-					
-					echo "Danke - Ihre Daten wurden gespeichert";
-					exit;
-				else:
-			?>
-							
-			<h3><u>E-Mail Registrerung</u></h3>
-
-			<form action="index.php" method="get">
-
-				<p>Ihre E-Mail-Adresse<br>
-				<input type="Text" name="email"></p>
-
-				<p>Name:<br>
-				<input type="Text" name="name"></p>
-
-				<input type="Submit" name="" value="speichern">
-
-			</form>
-	
-			<?php endif; ?>			
+		
+		<h2> Einlogen </h2> 
+		<form method="post" action="indexRegOK.php">
+			<p><input type="text" class="pflichtfeld" placeholder="Name" name="name" /></p>
+			<p><input type="email" class="pflichtfeld" placeholder="E-Mail" name="email" /></p>
+			<p><input type="submit" value="Registrieren" /></p>
+		</form>
 
 			
 </article>
