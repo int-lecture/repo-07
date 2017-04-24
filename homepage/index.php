@@ -32,16 +32,52 @@
 				Das Produkt ist ein verschlüsseltes Messengersystem mit neuen Features.<br/> 
 				Die Produktentwicklung hat im Rahmen der INT Veranstaltung an der HS Mannheim stattgefunden.</p>
 
-		 <img src="mini2.gif" alt="HTML5 Icon" style="float:right;width:300px;height:250px;" >
-
+		 <img src="mini2.gif" alt="HTML5 Icon" style="float:right;width:180px;height:128px;" >
+	
 			<br/>
-		
-		<h2> Einlogen </h2> 
-		<form method="post" action="indexRegOK.php">
-			<p><input type="text" class="pflichtfeld" placeholder="Name" name="name" /></p>
+			
+			<?php
+
+				if(!empty($_GET['email']) && !empty($_GET['name'])):
+	
+					// und nun die Daten in eine Datei schreiben
+					// Datei wird zum Schreiben geoeffnet a für append hinzufügen
+					$handle = fopen ( "anfragen.txt", "a" );
+					$emailadress = $_GET['email'];
+					$nameDesKunden =  $_GET['name'];
+					 
+					// schreiben des Inhaltes von email
+					fwrite ( $handle, $emailadress );
+					 
+					// Trennzeichen einfügen, damit Auswertung möglich wird
+					fwrite ( $handle, "|" );
+					 
+					// schreiben des Inhalts von name
+					fwrite ( $handle, $nameDesKunden );
+
+					// schreiben eines Leerzeichens
+					fwrite ( $handle, " " );
+					 
+					// Datei schließen
+					fclose ( $handle );
+					
+					echo "Danke - Ihre Daten wurden gespeichert";
+					exit;
+				else:
+			?>
+							
+			<h3><u>E-Mail Registrerung</u></h3>
+
+			<form action="index.php" method="get">
+
+				<p><input type="text" class="pflichtfeld" placeholder="Name" name="name" /></p>
 			<p><input type="email" class="pflichtfeld" placeholder="E-Mail" name="email" /></p>
+			<p><input type="passwort" class="pflichtfeld" placeholder="Passwort" name="passwort" /></p>
 			<p><input type="submit" value="Registrieren" /></p>
-		</form>
+
+			</form>
+	
+			<?php endif; ?>			
 
 			
 </article>
