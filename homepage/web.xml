@@ -1,0 +1,10 @@
+<!-- disabled auto scan
+        <context-param>
+             <param-name>resteasy.scan</param-name>
+             <param-value>true</param-value>
+</context-param> -->
+
+<context-param>
+	<param-name>resteasy.resources</param-name>
+	<param-value>com.mkyong.rest.JSONService</param-value>
+</context-param>
