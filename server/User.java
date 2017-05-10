@@ -1,4 +1,4 @@
-package com.example.rest;
+package de.gruppe_07.rest.jersey;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class User {
 	
 	public User(){
 		this.name = "";
-		this.sequence = 0;
+		this.sequence = 1;
 		this.messageList = new ArrayList<Message>();
 		
 	}
@@ -20,7 +20,7 @@ public class User {
 	public User(String name){
 		userList.add(this);
 		this.name = name;
-		this.sequence = 0;
+		this.sequence = 1;
 		this.messageList = new ArrayList<Message>();
 		
 	}
@@ -42,11 +42,9 @@ public class User {
 	}
 	
 	public static User getUser(String username){
-		int i = 0;
-		while(i < userList.size()){
+		for(int i = 0; i < userList.size(); i++){
 			if(userList.get(i).getName().equals(username))
 				return userList.get(i);
-			i++;
 		}		
 		return null;
 	}
@@ -62,21 +60,23 @@ public class User {
 	}
 	
 	public ArrayList<Message> getMessages(int sequence){
-		ArrayList<Message> temp = new ArrayList<Message>();
-		int amountMessages;
 		if(sequence == 0)
-			amountMessages = messageList.size();
-		else 
-			amountMessages = this.sequence - sequence - 2;
-		
-		for(int i = 0; i < amountMessages; i++){
-			temp.add(messageList.get(i));
+			return messageList;
+		ArrayList<Message> temp = new ArrayList<Message>();
+		for(int i = 0; i < messageList.size(); i++){
+			if(messageList.get(i).getSequence() > sequence)
+				temp.add(messageList.get(i));
 		}
-		messageList.clear();
+		this.messageList = temp;
 		return temp;
 	}
 	
-	public void deleteMessages(){
-		messageList.clear();
+	public void deleteMessages(int sequence){
+		ArrayList<Message> temp = new ArrayList<Message>();
+		for(int i = 0; i < messageList.size();i++){
+			if(messageList.get(i).getSequence() > sequence)
+				temp.add(messageList.get(i));
+		}
+		messageList = temp;
 	}
 }

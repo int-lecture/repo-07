@@ -1,24 +1,22 @@
-package com.example.rest;
-
-import java.util.Date;
+package de.gruppe_07.rest.jersey;
 
 public class Message {
 
 	private String from;
 	private String to;
-	private Date date;
+	private String date;
 	private String text;
 	private int sequence;
 	
 	public Message(){
 		this.setFrom("");
 		this.setTo("");
-		this.setDate(new Date(0,0,0,0,0,0));
+		this.setDate("");
 		this.setText("");
 		this.sequence = -1;
 	}
 	
-	public Message(String from, String to, Date date, String text){
+	public Message(String from, String to, String date, String text){
 		this.setFrom(from);
 		this.setTo(to);
 		this.setDate(date);
@@ -42,11 +40,11 @@ public class Message {
 		this.to = to;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -67,7 +65,7 @@ public class Message {
 	}
 
 	public boolean complete(){
-		if(!from.equals("") && !to.equals("") && !date.equals(new Date(0,0,0,0,0,0)) && !text.equals(""))
+		if(!from.equals("") && !to.equals("") && !date.equals("") && !text.equals(""))
 			return true;
 		return false;
 	}
