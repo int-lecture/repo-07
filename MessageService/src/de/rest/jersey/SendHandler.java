@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @Path("send")
-public class SendHandler extends Handler{
+public class SendHandler {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -26,7 +26,7 @@ public class SendHandler extends Handler{
 			String token = messageJson.getString("token");
 			String pseudonym = messageJson.getString("from");
 			
-			if(authUser(token, pseudonym)){
+			if(HandlerHelper.authUser(token, pseudonym)){
 				StorageProviderMongoDB mongoDB = new StorageProviderMongoDB();
 				Long sequence = mongoDB.retrieveAndUpdateSequence(pseudonym);
 
@@ -38,7 +38,7 @@ public class SendHandler extends Handler{
 				mongoDB.storeMessage(message);
 				
 				JSONObject response = new JSONObject();
-				response.put("date", formatDate(new Date()));
+				response.put("date", HandlerHelper.formatDate(new Date()));
 				response.put("sequence", sequence);
 				
 				return Response.status(201).entity(response.toString()).build();

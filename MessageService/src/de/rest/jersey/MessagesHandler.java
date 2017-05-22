@@ -17,7 +17,7 @@ import org.json.JSONException;
 import com.google.gson.Gson;
 
 @Path("/messages/{user_id}")
-public class MessagesHandler extends Handler{
+public class MessagesHandler {
 	
 	@Path("/{sequence_number}")
 	@GET
@@ -36,7 +36,7 @@ public class MessagesHandler extends Handler{
 	}
 	
 	public Response getMessages(String token, String pseudonym, int sequence_number) {			
-		if(authUser(token, pseudonym)){
+		if(HandlerHelper.authUser(token, pseudonym)){
 			StorageProviderMongoDB mongoDB = new StorageProviderMongoDB();
 			List<Message> messageList = mongoDB.retrieveMessages(pseudonym, sequence_number, true);
 			

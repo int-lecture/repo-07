@@ -10,9 +10,9 @@ import org.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
 
-public class Handler {
+public class HandlerHelper {
 
-	public boolean authUser(String token, String pseudonym){
+	public static boolean authUser(String token, String pseudonym){
 		Client client = Client.create();
 		
 		JSONObject request = getRequest(token, pseudonym);
@@ -25,7 +25,7 @@ public class Handler {
         return new JSONObject(response).getBoolean("success");
 	}
 	
-	public JSONObject getProfile(String token, String pseudonym){
+	public static JSONObject getProfile(String token, String pseudonym){
 		Client client = Client.create();
 		
 		JSONObject request = getRequest(token, pseudonym);
@@ -38,20 +38,20 @@ public class Handler {
         return new JSONObject(response);
 	}
 	
-	public JSONObject getRequest(String token, String pseudonym){
+	public static JSONObject getRequest(String token, String pseudonym){
 		JSONObject request = new JSONObject();
     	request.put("token", token);
     	request.put("pseudonym", pseudonym);
     	return request;
 	}
 	
-	public String formatDate(Date date){
+	public static String formatDate(Date date){
 		String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 		SimpleDateFormat sdf = new SimpleDateFormat(ISO8601);
 		return sdf.format(date);
 	}
 	
-	public Date parseDate(String date) throws ParseException{
+	public static Date parseDate(String date) throws ParseException{
 		String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 		SimpleDateFormat sdf = new SimpleDateFormat(ISO8601);
 		return sdf.parse(date);
