@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

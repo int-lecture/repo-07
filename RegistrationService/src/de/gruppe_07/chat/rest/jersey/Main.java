@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,8 +11,8 @@ public class Main {
 
 public static void main(String[] args) throws IllegalArgumentException, IOException{
 		
-		final String baseUri = "http://141.19.142.61:5002/"; 
-		final String paket = "de.rest.jersey";
+		final String baseUri = "http://localhost:5002/"; 
+		final String paket = "de.gruppe_07.chat.rest.jersey";
 		final Map<String, String> initParams = new HashMap<String, String>();
 		initParams.put("com.sun.jersey.config.property.packages", paket);
 		

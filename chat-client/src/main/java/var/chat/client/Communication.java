@@ -109,7 +109,7 @@ public class Communication {
      */
     String login(String user, String password, String pseudonym) {
         JSONObject json = new JSONObject();
-        json.put("username", user);
+        json.put("user", user);
         json.put("password", password);
         json.put("pseudonym", pseudonym);
 

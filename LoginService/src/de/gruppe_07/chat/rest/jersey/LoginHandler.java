@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -23,8 +23,8 @@ public class LoginHandler{
 	public Response login(String input) throws UnsupportedEncodingException, JSONException, NoSuchAlgorithmException, InvalidKeySpecException{
 		JSONObject loginData = new JSONObject(input);
 		
-		if(loginData.has("username") && loginData.has("password") && loginData.has("pseudonym")){
-			String username = loginData.getString("username");
+		if(loginData.has("user") && loginData.has("password") && loginData.has("pseudonym")){
+			String username = loginData.getString("user");
 			String pseudonym = loginData.getString("pseudonym");
 			String password = loginData.getString("password");
 			

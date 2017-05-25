@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 public class Message {
 

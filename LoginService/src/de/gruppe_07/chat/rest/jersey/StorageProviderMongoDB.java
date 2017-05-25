@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -29,7 +29,7 @@ import com.mongodb.client.MongoDatabase;
 @Path("mongoDB/")
 public class StorageProviderMongoDB {
 
-	private static MongoClientURI connectionString = new MongoClientURI("mongodb://141.19.142.61:27017");
+	private static MongoClientURI connectionString = new MongoClientURI("mongodb://localhost:27017");
     private static MongoClient mongoClient = new MongoClient(connectionString);
     private static MongoDatabase database = mongoClient.getDatabase("user");
 	

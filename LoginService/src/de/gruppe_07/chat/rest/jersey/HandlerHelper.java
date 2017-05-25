@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -15,13 +15,6 @@ article {
     margin: 25px;
  padding: 25px;
 }
-p {
-    margin: 25px;
- padding: 25px;
-div {
-    margin: 25px;
- padding: 25px;
-}
 
 </style>
 </head>
@@ -37,8 +30,8 @@ div {
       <a class="navbar-brand" href="index.php">Startseite</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="persoenlicheDaten.html">Persönliche Daten</a></li>
-       <li><a href="messenger.html">Messenger</a></li>
+      <li><a href="persoenlicheDaten.html">Persönliche Daten</a></li>
+      <li class="active"><a href="messenger.html">Messenger</a></li>
       <li><a href="impressum.html">Impressum</a></li>
 
     </ul>
@@ -50,29 +43,10 @@ div {
 </nav>
   </div>
 </nav>
-
-
-</div>
 <article>
+ <h1>Startseite</h1>
 
-<div class="container">
-	<div class="row">
-		<div class="col-lg-3 col-sm-6">
+				<p>Willkommen auf der Website der Gruppe 7</p>
 
-                <div class="avatar">
-                    <img alt="" src="beautiful-fluffy-cat-british-longhair-2.jpg" style="width:180px;height:128px;">
-                 </div>
-                        <a>Kitty Kat</a>
-
-                    <div class="desc">Cat</div>
-                    <div class="desc">Playfull</div>
-                    <div class="desc">Fluffy</div>
-
-
-            </div>
-
-
-</div>
-</article>
-</body>
+	</body>
 </html>

@@ -1,4 +1,4 @@
-package de.rest.jersey;
+package de.gruppe_07.chat.rest.jersey;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,18 +9,24 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.UniformInterfaceException;
 
 public class HandlerHelper {
 
 	public static boolean authUser(String token, String pseudonym){
-		Client client = Client.create();
+		String response = "{'success':false}";
+		try{
+			Client client = Client.create();
+			
+			JSONObject request = getRequest(token, pseudonym);
+	    	response = client.resource("http://localhost:5001/auth")
+	        .type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+	        .post(String.class, request.toString());
+	        
+	    	client.destroy();
+		} catch(UniformInterfaceException | ClientHandlerException e){}
 		
-		JSONObject request = getRequest(token, pseudonym);
-    	String response = client.resource("http://141.19.142.61:5001/auth")
-        .type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-        .post(String.class, request.toString());
-        
-    	client.destroy();
         
         return new JSONObject(response).getBoolean("success");
 	}
@@ -29,7 +35,7 @@ public class HandlerHelper {
 		Client client = Client.create();
 		
 		JSONObject request = getRequest(token, pseudonym);
-    	String response = client.resource("http://141.19.142.61:5002/profile")
+    	String response = client.resource("http://localhost:5002/profile")
         .type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
         .post(String.class, request.toString());
         
