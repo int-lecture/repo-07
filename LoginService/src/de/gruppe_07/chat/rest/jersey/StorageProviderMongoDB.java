@@ -2,6 +2,9 @@ package de.gruppe_07.chat.rest.jersey;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.ne;
+
+import static com.mongodb.client.model.Updates.push;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -29,14 +32,14 @@ import com.mongodb.client.MongoDatabase;
 @Path("mongoDB/")
 public class StorageProviderMongoDB {
 
-	private static MongoClientURI connectionString = new MongoClientURI("mongodb://localhost:27017");
+	private static MongoClientURI connectionString = new MongoClientURI("mongodb://127.0.0.1:27017");
     private static MongoClient mongoClient = new MongoClient(connectionString);
     private static MongoDatabase database = mongoClient.getDatabase("user");
 	
-    public synchronized String getPassword(String username, String pseudonym){
+    public synchronized String getPassword(String username){
     	MongoCollection<Document> users = database.getCollection("users");
     	
-    	Document foundUser = users.find(and(eq("username", username), eq("pseudonym", pseudonym))).first();
+    	Document foundUser = users.find(eq("username", username)).first();
     	
     	if(foundUser != null)
     		return foundUser.getString("password");
@@ -44,10 +47,10 @@ public class StorageProviderMongoDB {
     	return null;
     }
     
-    public synchronized boolean replaceTokenAndExpireDate(String username, String pseudonym, String token, Date expireDate){
+    public synchronized boolean replaceTokenAndExpireDate(String username, String token, Date expireDate){
     	MongoCollection<Document> users = database.getCollection("users");
     	
-    	Document foundUser = users.find(and(eq("username", username), eq("pseudonym", pseudonym))).first();
+    	Document foundUser = users.find(eq("username", username)).first();
     	
     	if(foundUser != null){    		
        		foundUser.replace("expireDate", HandlerHelper.formatDate(expireDate));
@@ -89,14 +92,16 @@ public class StorageProviderMongoDB {
     	MongoCollection<Document> users = database.getCollection("users");
     	Document user = users.find(and(eq("username", username), eq("pseudonym", pseudonym))).first();
     	
-    	if(user == null){
-        	String password = SecurityHelper.hashPassword(userData.getString("password"));
-        	
+    	if(user == null){    		
+    		String password = SecurityHelper.hashPassword(userData.getString("password"));
+
     		user = new Document("username",username)
     				.append("pseudonym", pseudonym).append("password", password)
     				.append("token", "").append("expireDate", "").append("contact", new BsonArray());	
     		users.insertOne(user);
     		
+    		users.updateMany(ne("username", username), push("contact",pseudonym));
+
     		response.put("success", true);
     		return Response.ok(response.toString()).build();
     	}	
@@ -113,10 +118,10 @@ public class StorageProviderMongoDB {
     public synchronized Response getProfile(String input){
     	JSONObject userData = new JSONObject(input);
     	String token = userData.getString("token"); 
-    	String pseudonym = userData.getString("pseudonym");
+    	String username = userData.getString("username");
     	
     	MongoCollection<Document> users = database.getCollection("users");
-    	Document user = users.find(and(eq("token", token), eq("pseudonym", pseudonym))).first();
+    	Document user = users.find(and(eq("token", token), eq("username", username))).first();
 
     	JSONObject response = new JSONObject();
 
@@ -124,7 +129,7 @@ public class StorageProviderMongoDB {
     		return Response.noContent().entity(response.toString()).build();
     	}
     	
-    	response.put("pseudonym", pseudonym);
+    	response.put("pseudonym", user.get("pseudonym"));
     	response.put("username", user.get("username"));
     	response.put("contact", user.get("contact"));
     	

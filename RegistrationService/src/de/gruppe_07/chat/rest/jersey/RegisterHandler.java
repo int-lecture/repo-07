@@ -23,7 +23,7 @@ public class RegisterHandler {
 		if(registDataJSON.has("pseudonym") && registDataJSON.has("password") && registDataJSON.has("username")){
 			Client client = Client.create();
 	    	
-			String success = client.resource("http://localhost:5001/mongoDB/putUser")
+			String success = client.resource("http://141.19.142.61:5001/mongoDB/putUser")
 	        .type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 	        .put(String.class, registData.toString());
 	        JSONObject responseJSON = new JSONObject(success);

@@ -20,10 +20,10 @@ public class ProfileHandler {
 	public Response getProfile(String profileData){
 		JSONObject profileDataJSON = new JSONObject(profileData);
 		
-		if(profileDataJSON.has("token") && profileDataJSON.has("pseudonym")){
+		if(profileDataJSON.has("token") && profileDataJSON.has("username")){
 			Client client = Client.create();
 	    	
-			String profile = client.resource("http://localhost:5001/mongoDB/receiveProfile")
+			String profile = client.resource("http://141.19.142.61:5001/mongoDB/receiveProfile")
 	        .type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 	        .post(String.class, profileData.toString());
 			JSONObject profileJSON = new JSONObject(profile);

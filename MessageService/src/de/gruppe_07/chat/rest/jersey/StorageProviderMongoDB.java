@@ -27,7 +27,7 @@ class StorageProviderMongoDB {
 
     /** URI to the MongoDB instance. */
     private static MongoClientURI connectionString =
-            new MongoClientURI("mongodb://localhost:27017");
+            new MongoClientURI("mongodb://127.0.0.1:27017");
 
     /** Client to be used. */
     private static MongoClient mongoClient = new MongoClient(connectionString);

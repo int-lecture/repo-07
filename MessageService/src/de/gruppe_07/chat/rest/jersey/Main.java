@@ -11,7 +11,7 @@ public class Main {
 
 public static void main(String[] args) throws IllegalArgumentException, IOException{
 		
-		final String baseUri = "http://localhost:5000/"; 
+		final String baseUri = "http://141.19.142.61:5000/"; 
 		final String paket = "de.gruppe_07.chat.rest.jersey";
 		final Map<String, String> initParams = new HashMap<String, String>();
 		initParams.put("com.sun.jersey.config.property.packages", paket);

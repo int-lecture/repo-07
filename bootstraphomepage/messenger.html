@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,11 +19,10 @@ article {
 
 </style>
 </head>
+
 <body>
 
 <div class="container">
-
-
 
 		<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
@@ -44,58 +44,70 @@ article {
   </div>
 </nav>
 <article>
+
+<div class="container-fluid">
+
  <h1>Messenger</h1>
 
-				<p>Ist ein verschlüseltes Messengersystem für die Kommuniktion mit verschiedenen Clients. <br/>
-				Die Realisierung wird mit Hilfe des JMS Systems bewerkstelligt.</p>
+	 <p>Ist ein verschlüseltes Messengersystem für die Kommuniktion mit verschiedenen Clients. <br/>
+			Die Realisierung wird mit Hilfe des JMS Systems bewerkstelligt.</p>
 
-		<!--<form action="produkt.php">
-			<input type="Submit" name="Abmelden" value="Abmelden"><br>
-		</form>
--->
+      <script src="js/storage.js"></script>
+      <script src="js/messenger.js"></script>
 
 			<h2>Username :</h2>
 
-			<!-- Liste von Usern -->
-			<form action="Messenger.html" method="post">ssss&ensp;<button type="button" class="btn btn-info">Abmelden</button></form>
-			<h2>Empfaenger :</h2>
+      <p><script> printUsername(); </script></p>
+			<form action="#" method="post"><button type="button" class="btn btn-info" onclick="logout()">Abmelden</button></form>
 
-			<form action="Messenger.html" method="post">
-			<div class="container">
+      <h2>Empfaenger : </h2>
 
+      <p id="noReceiver"></p>
+      <script> getProfile(); </script>
+			<form action="#" method="post">
 
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Freunde
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><a id="dropdownReceiver">Freunde</a>
+            <span class="caret">
+            </span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" id="empfaenger">
+            <script> printReceiver(); </script>
+          </ul>
+        </div>
 
-      <li role="presentation"><a role="menuitem" tabindex="-1" option value="1">Felix</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" option value="2">Diana</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" option value="3">Dennis</a></li>
+        <h2>Nachricht :</h2>
 
-    </ul>
-  </div>
-</div>
+        <p id="noMessage"></p>
 
+        <div class="input-group">
+          <input id="message" type="text" class="form-control">
+				  <button type="button" class="btn btn-success" onclick="send()">Senden</button>
+          <span class="input-group-btn"></span>
+        </div>
+      </div>
 
-			<p><b>Text:</b></p>
+    </form>
+	  <br>
 
-		 <div class="panel-footer">
-                 <div class="input-group">
-                  <input type="text" class="form-control">
-				  <button type="button" class="btn btn-success">Senden</button>
-                  <span class="input-group-btn">
-
-                  </span>
-		</form>
-		<br>
+    <script> window.setInterval(function(){ getMessages(); },1000); </script>
 
 		<!-- Ausgabe des Chatverlaufs -->
-		<textarea name="displayfile" cols="150" rows="20">
-
-		</textarea>
-		</article>
-		</div>
-		<footer></footer)
-	</body>
+    <div class="panel-footer">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Message</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="messageTable">
+          <script> window.setInterval(function(){ printMessages(); },1000); </script>
+        </tbody>
+      </table>
+    </div>
+	</article>
+  </body>
 </html>

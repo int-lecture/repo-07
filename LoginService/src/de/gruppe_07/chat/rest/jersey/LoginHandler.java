@@ -23,31 +23,37 @@ public class LoginHandler{
 	public Response login(String input) throws UnsupportedEncodingException, JSONException, NoSuchAlgorithmException, InvalidKeySpecException{
 		JSONObject loginData = new JSONObject(input);
 		
-		if(loginData.has("user") && loginData.has("password") && loginData.has("pseudonym")){
-			String username = loginData.getString("user");
-			String pseudonym = loginData.getString("pseudonym");
+		if(loginData.has("username") && loginData.has("password")){ //&& loginData.has("pseudonym")){  wegen web login geändert, kein pseudonym
+			String username = loginData.getString("username");
+			//String pseudonym = loginData.getString("pseudonym");
 			String password = loginData.getString("password");
 			
 			StorageProviderMongoDB mongoDB = new StorageProviderMongoDB();
-			String storedPassword = mongoDB.getPassword(username, pseudonym);
+			String storedPassword = mongoDB.getPassword(username);
 			
 			if((SecurityHelper.validatePassword(password, storedPassword))){
 				Date expireDate = HandlerHelper.getExpireDate();
 				String token = SecurityHelper.encodeToken(HandlerHelper.formatDate(expireDate));
-				boolean success = mongoDB.replaceTokenAndExpireDate(username, pseudonym, token, expireDate);
+				boolean success = mongoDB.replaceTokenAndExpireDate(username, token, expireDate);
 				
 				if(success){
 					JSONObject response = new JSONObject();
 					response.put("token", token);
-					response.put("expire-date", HandlerHelper.formatDate(expireDate));
+					response.put("expireDate", HandlerHelper.formatDate(expireDate));
 					
-					return Response.status(200).entity(response.toString()).build();
+					return Response.status(200).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers",
+			                "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true").header("Access-Control-Allow-Methods",
+			                        "GET, POST, PUT, DELETE, OPTIONS, HEAD").entity(response.toString()).build();
 				}
 			}
 			
-			return Response.status(401).build();
+			return Response.status(401).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers",
+	                "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true").header("Access-Control-Allow-Methods",
+	                        "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 		}
 		
-		return Response.status(400).build();
+		return Response.status(400).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers",
+                "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true").header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
 	}	
 }

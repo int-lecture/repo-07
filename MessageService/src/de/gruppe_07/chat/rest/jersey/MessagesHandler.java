@@ -38,8 +38,13 @@ public class MessagesHandler {
 	public Response getMessages(String token, String pseudonym, int sequence_number) {			
 		if(HandlerHelper.authUser(token, pseudonym)){
 			StorageProviderMongoDB mongoDB = new StorageProviderMongoDB();
-			List<Message> messageList = mongoDB.retrieveMessages(pseudonym, sequence_number, true);
+			List<Message> messageList;
 			
+			if(sequence_number == 0)
+				messageList = mongoDB.retrieveMessages(pseudonym, sequence_number, false);
+			else
+				messageList = mongoDB.retrieveMessages(pseudonym, sequence_number, true);
+
 			if(messageList != null){
 				Gson gson = new Gson();
 				

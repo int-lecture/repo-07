@@ -20,7 +20,7 @@ public class HandlerHelper {
 			Client client = Client.create();
 			
 			JSONObject request = getRequest(token, pseudonym);
-	    	response = client.resource("http://localhost:5001/auth")
+	    	response = client.resource("http://141.19.142.61:5001/auth")
 	        .type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 	        .post(String.class, request.toString());
 	        
