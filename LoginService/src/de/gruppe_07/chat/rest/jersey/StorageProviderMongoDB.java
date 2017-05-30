@@ -9,6 +9,7 @@ import static com.mongodb.client.model.Updates.push;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
@@ -20,12 +21,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.bson.BsonArray;
+import org.bson.BsonString;
+import org.bson.BsonType;
+import org.bson.BsonValue;
 import org.bson.Document;
+import org.bson.codecs.BsonValueCodec;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -94,14 +101,28 @@ public class StorageProviderMongoDB {
     	
     	if(user == null){    		
     		String password = SecurityHelper.hashPassword(userData.getString("password"));
-
-    		user = new Document("username",username)
-    				.append("pseudonym", pseudonym).append("password", password)
-    				.append("token", "").append("expireDate", "").append("contact", new BsonArray());	
-    		users.insertOne(user);
+    		FindIterable<Document> userList = users.find();
     		
-    		users.updateMany(ne("username", username), push("contact",pseudonym));
+    		if(userList != null){
+    			ArrayList<String> contactArray = new ArrayList<String>();
+    			
+    			for(Document tmp : userList){
+    				contactArray.add(tmp.getString("pseudonym"));
+    			}
+    			user = new Document("username",username)
+        				.append("pseudonym", pseudonym).append("password", password)
+        				.append("token", "").append("expireDate", "").append("contact", contactArray);
+    		
+    		} else {
+    			user = new Document("username",username)
+        				.append("pseudonym", pseudonym).append("password", password)
+        				.append("token", "").append("expireDate", "").append("contact", new ArrayList<String>());
+    		}
+    			
+    		users.insertOne(user);
 
+    		users.updateMany(ne("username", username), push("contact",pseudonym));
+    		
     		response.put("success", true);
     		return Response.ok(response.toString()).build();
     	}	
