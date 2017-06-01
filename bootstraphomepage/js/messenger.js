@@ -1,3 +1,11 @@
+function checkRedirect(){
+  var username = storage.get("username");
+  if(typeof username == "undefined"){
+    location.href = "login.html";
+  }
+  storage.set("receiver","undefined");
+}
+
 function printUsername(){
   var username = storage.get("username");
   document.write(username);
@@ -60,15 +68,15 @@ function send(){
         if (this.readyState == 4 && this.status == 201) {
           var response = xhttp.responseText;
           var responseJSON = JSON.parse(response);
-          storage.set("receivedSequence",responseJSON.sequence);
-          var messages = storage.get("messages");
+          var messages = storage.get(to);
+
           if(typeof messages == "undefined"){
             messages = [];
           } else {
             messages = JSON.parse(messages);
           }
           messages.push(message);
-          storage.set("messages", JSON.stringify(messages));
+          storage.set(to, JSON.stringify(messages));
         }
       };
 
@@ -88,7 +96,7 @@ function send(){
 function getMessages(){
   var token = storage.get("token");
   var pseudonym = storage.get("pseudonym");
-  var sequence = storage.get("lastMessageSequence");
+  var sequence = storage.get("receivedSequence");
 
   var xhttp = new XMLHttpRequest();
 
@@ -97,28 +105,30 @@ function getMessages(){
       var response = xhttp.responseText;
       var responseJSON = JSON.parse(response);
 
-      var messages = storage.get("messages");
-
-      if((typeof messages) === "undefined") {
-        messages = [];
-      } else {
-        messages = JSON.parse(messages);
-      }
+      var receiver;
+      var messages;
 
       for(message in responseJSON){
-        messages.push(responseJSON[message]);
-      }
+        receiver = responseJSON[message].from;
+        messages = storage.get(receiver);
 
-      storage.remove("messages");
-      storage.set("messages",JSON.stringify(messages));
-      storage.set("lastMessageSequence", messages[messages.length - 1].sequence);
+        if((typeof messages) === "undefined") {
+          messages = [];
+        } else {
+          messages = JSON.parse(messages);
+        }
+
+        messages.push(responseJSON[message]);
+        storage.set(receiver, JSON.stringify(messages));
+        storage.set("receivedSequence", responseJSON[message].sequence);
+      }
     }
   };
 
   if(typeof sequence === "undefined"){
     xhttp.open("GET", "http://141.19.142.61:5000/messages/" + pseudonym, false);
   } else {
-    xhttp.open("GET", "http://141.19.142.61:5000/messages/" + pseudonym + "/" + sequence, false);
+    xhttp.open("GET", "http://141.19.142.61:5000/messages/" + pseudonym + "/" + sequence, true);
   }
   xhttp.setRequestHeader("Accepts","application/json");
   xhttp.setRequestHeader("Authorization"," Token " + token);
@@ -127,7 +137,8 @@ function getMessages(){
 }
 
 function printMessages(){
-  var messages = storage.get("messages");
+  var receiver = storage.get("receiver");
+  var messages = storage.get(receiver);
 
   if(typeof messages !== "undefined"){
     messages = JSON.parse(messages);
@@ -135,7 +146,16 @@ function printMessages(){
     var tmp = "";
     for(i in messages){
       date = new Date(messages[i].date);
-      tmp = tmp + "<tr><td>" + messages[i].from + "</td><td>" + messages[i].to + "</td><td>" + messages[i].text + "</td><td>" + date.getHours() + ":" + date.getMinutes() + "</td></tr>";
+      hours = date.getHours();
+      minutes = date.getMinutes();
+
+      if(hours < 10){
+        hours = "0" + hours;
+      }
+      if(minutes < 10){
+        minutes = "0" + minutes;
+      }
+      tmp = tmp + "<tr><td>" + messages[i].from + "</td><td>" + messages[i].to + "</td><td>" + messages[i].text + "</td><td>" + hours + ":" + minutes + "</td></tr>";
     }
     document.getElementById("messageTable").innerHTML = tmp;
   }

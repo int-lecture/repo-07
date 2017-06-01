@@ -28,12 +28,12 @@ public class SendHandler {
 			
 			if(HandlerHelper.authUser(token, pseudonym)){
 				StorageProviderMongoDB mongoDB = new StorageProviderMongoDB();
-				Long sequence = mongoDB.retrieveAndUpdateSequence(pseudonym);
-
 				String to = messageJson.getString("to"); 
 				String date = messageJson.getString("date");
 				String text = messageJson.getString("text");
 				
+				Long sequence = mongoDB.retrieveAndUpdateSequence(to);
+
 				Message message = new Message(pseudonym, to, date, text, sequence);
 				mongoDB.storeMessage(message);
 				

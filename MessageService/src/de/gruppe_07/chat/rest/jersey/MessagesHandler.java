@@ -47,7 +47,7 @@ public class MessagesHandler {
 
 			if(messageList != null){
 				Gson gson = new Gson();
-				
+
 				return Response.ok(gson.toJson(messageList)).build();
 			}
 			
