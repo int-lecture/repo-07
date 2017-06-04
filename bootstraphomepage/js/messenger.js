@@ -22,6 +22,8 @@ function getProfile(){
   var requestJson = {"username":username,"token":token};
 
   var xhttp = new XMLHttpRequest();
+  xhttp.withCredentials = true;
+
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;
@@ -63,6 +65,7 @@ function send(){
     if(text !== ""){
       var message = {"token":token,"from":from,"to":to,"date":date,"text":text};
       var xhttp = new XMLHttpRequest();
+      xhttp.withCredentials = true;
 
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 201) {
@@ -99,7 +102,8 @@ function getMessages(){
   var sequence = storage.get("receivedSequence");
 
   var xhttp = new XMLHttpRequest();
-
+  xhttp.withCredentials = true;
+  
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;

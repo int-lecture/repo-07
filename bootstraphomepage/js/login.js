@@ -4,6 +4,8 @@ function login(switchWindow){
   var requestJson = {"username":username,"password":password};
 
   var xhttp = new XMLHttpRequest();
+  xhttp.withCredentials = true;
+
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;
@@ -33,6 +35,8 @@ function signup(){
   var requestJson = {"username":username,"pseudonym":pseudonym,"password":password};
 
   var xhttp = new XMLHttpRequest();
+  xhttp.withCredentials = true;
+  
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       login(false);

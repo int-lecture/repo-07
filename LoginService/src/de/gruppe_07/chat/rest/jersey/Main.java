@@ -15,6 +15,7 @@ public static void main(String[] args) throws IllegalArgumentException, IOExcept
 		final String paket = "de.gruppe_07.chat.rest.jersey";
 		final Map<String, String> initParams = new HashMap<String, String>();
 		initParams.put("com.sun.jersey.config.property.packages", paket);
+		initParams.put("com.sun.jersey.spi.container.ContainerResponseFilters", "de.gruppe_07.chat.rest.jersey.CORSFilter");
 		
 		System.out.println("Starte grizzly...");
 		SelectorThread threadSelector = GrizzlyWebContainerFactory.create(
