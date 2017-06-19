@@ -33,7 +33,7 @@ article {
       <li><a href="persoenlicheDaten.html">Persönliche Daten</a></li>
       <li class="active"><a href="messenger.html">Messenger</a></li>
       <li><a href="impressum.html">Impressum</a></li>
-
+      <li><a href="ChangeServer.html">Konfiguration</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="signup.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>

@@ -24,7 +24,7 @@ function getProfile(){
   var xhttp = new XMLHttpRequest();
   xhttp.withCredentials = true;
 
-  xhttp.onreadystatechange = function() {
+  xhttp.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;
       var responseJSON = JSON.parse(response);
@@ -34,7 +34,8 @@ function getProfile(){
     }
   };
 
-  xhttp.open("POST", "http://141.19.142.61:5002/profile", false);
+  var registrationService = storage.get("registrationService");
+  xhttp.open("POST", registrationService + "/profile", false);
   xhttp.setRequestHeader("Content-Type","application/json")
   var input = JSON.stringify(requestJson);
   xhttp.send(input);
@@ -83,7 +84,8 @@ function send(){
         }
       };
 
-      xhttp.open("PUT", "http://141.19.142.61:5000/send", false);
+      var messageService = storage.get("messageService");
+      xhttp.open("PUT", messageService + "/send", false);
       xhttp.setRequestHeader("Content-Type","application/json");
       var input = JSON.stringify(message);
       xhttp.send(input);
@@ -103,7 +105,7 @@ function getMessages(){
 
   var xhttp = new XMLHttpRequest();
   xhttp.withCredentials = true;
-  
+
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;
@@ -129,10 +131,12 @@ function getMessages(){
     }
   };
 
+  var messageService = storage.get("messageService");
+
   if(typeof sequence === "undefined"){
-    xhttp.open("GET", "http://141.19.142.61:5000/messages/" + pseudonym, false);
+    xhttp.open("GET", messageService + "/messages/" + pseudonym, false);
   } else {
-    xhttp.open("GET", "http://141.19.142.61:5000/messages/" + pseudonym + "/" + sequence, true);
+    xhttp.open("GET", messageService + "/messages/" + pseudonym + "/" + sequence, true);
   }
   xhttp.setRequestHeader("Accepts","application/json");
   xhttp.setRequestHeader("Authorization"," Token " + token);

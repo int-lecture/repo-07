@@ -20,8 +20,8 @@ function login(switchWindow){
       document.getElementById("loginFail").innerHTML = "Bitte ueberpruefen Sie Ihre Eingaben";
     }
   };
-
-  xhttp.open("POST", "http://141.19.142.61:5001/login", false);
+  var loginService = storage.get("loginService");
+  xhttp.open("POST", loginService + "/login", false);
   xhttp.setRequestHeader("Content-Type","application/json");
   var input = JSON.stringify(requestJson);
   xhttp.send(input);
@@ -36,7 +36,7 @@ function signup(){
 
   var xhttp = new XMLHttpRequest();
   xhttp.withCredentials = true;
-  
+
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       login(false);
@@ -46,7 +46,8 @@ function signup(){
     }
   };
 
-  xhttp.open("PUT", "http://141.19.142.61:5002/register", false);
+  var registrationService = storage.get("registrationService");
+  xhttp.open("PUT", registrationService + "/register", false);
   xhttp.setRequestHeader("Content-Type","application/json");
   var input = JSON.stringify(requestJson);
   xhttp.send(input);
