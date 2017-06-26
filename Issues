@@ -1,0 +1,23 @@
+Gruppe 2 
+1. Frontend(2)-backend(2) 
+                      -login ok
+                      -reg ok
+                      -eigene Nachrichten beim wechseln von Chatpartners verschwinden
+2. Frontend(2)-backend(7)  
+                      -login ok
+                      -reg ok
+                      -eigene Nachrichten beim wechseln von Chatpartners verschwinden
+3. Frontend(7)-backend(2) 
+                      -alles gut
+Gruppe 1
+
+1. Frontend(1)-backend(1) 
+                      -reg funktioniert nicht
+                      -login funktioniert nicht
+2. Frontend(1)-backend(7)  
+                      -reg funktioniert nicht
+                      -login funktioniert nicht
+3. Frontend(7)-backend(1) 
+                      -bei reg :Uncaught DOMException: Failed to execute 'send' on 'XMLHttpRequest': 
+                                    Failed to load 'http://141.19.142.55:5002/register'.
+                      
